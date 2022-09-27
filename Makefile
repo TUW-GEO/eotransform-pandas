@@ -40,7 +40,7 @@ test: .install.test.done
 	pytest --verbose --color=yes --cov=eotransform_pandas --cov-report term-missing --doctest-modules
 
 version:
-	echo "__version__ = \"$(shell git describe --always --tags --abbrev=0)" > src/eotransform_pandas/_version.py
+	echo "__version__ = \"$(shell git describe --always --tags --abbrev=0)\"" > src/eotransform_pandas/_version.py
 
 dist: version
 	pip install --upgrade pip setuptools
