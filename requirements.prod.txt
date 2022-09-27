@@ -1,2 +1,0 @@
-eotransform>=1.1
-pandas
