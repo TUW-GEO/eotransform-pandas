@@ -57,3 +57,8 @@ def test_search_files_in_sub_folder_structure(tmp_path):
     assert_data_frame_eq(files_dataset, make_dataset(index="datetime_1",
                                                      datetime_1=pd.to_datetime([DAY_0, DAY_1, DAY_2]),
                                                      filepath=[file_0, file_1, file_2]))
+
+
+def test_return_empty_dataframe_if_target_does_not_exist(tmp_path):
+    files_dataset = gather_files(tmp_path, yeoda_naming_convention, index='datetime_1')
+    assert files_dataset.empty

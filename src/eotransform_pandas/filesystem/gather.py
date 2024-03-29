@@ -32,6 +32,8 @@ def _add_sub_folders(current: Path, sub_folders: deque, file_list: list):
 
 def _make_data_frame_from(data, index):
     df = pd.DataFrame(data)
+    if df.empty:
+        return df
     if index:
         df.set_index(index, inplace=True)
         df.sort_index(inplace=True)
