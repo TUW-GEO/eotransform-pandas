@@ -1,6 +1,9 @@
+import os
 from collections import defaultdict, deque
+from concurrent.futures.process import ProcessPoolExecutor
+from functools import partial
 from pathlib import Path
-from typing import Dict, Callable, Optional, Sequence, AnyStr, Pattern
+from typing import Dict, Callable, Optional, Sequence, AnyStr, Pattern, Generator
 
 import pandas as pd
 
@@ -10,14 +13,28 @@ def gather_files(root: Path, naming_convention: Callable[[str], Dict],
                  index: Optional[str] = None) -> pd.DataFrame:
     directories = list()
     _add_sub_folders(root, deque(sub_folder_structure or []), directories)
+    files = _files_generator(directories)
+    process_func = partial(_process_file, naming_convention=naming_convention)
+    with ProcessPoolExecutor(max_workers=os.cpu_count()) as executor:
+        files_and_metadata = executor.map(process_func, files)
 
-    files = [(file, naming_convention(file.name)) for directory in directories for file in directory.glob("*.*")]
     data = defaultdict(list)
-    for file, meta_data in files:
+    for file, meta_data in files_and_metadata:
         if meta_data:
             _add_file_and_meta_data(data, file, meta_data)
 
     return _make_data_frame_from(data, index)
+
+
+def _process_file(file, naming_convention):
+    return file, naming_convention(file.name)
+
+
+def _files_generator(directories: list) -> Generator[Path, None, None]:
+    for directory in directories:
+        for file in directory.iterdir():
+            if file.is_file():
+                yield file
 
 
 def _add_sub_folders(current: Path, sub_folders: deque, file_list: list):
