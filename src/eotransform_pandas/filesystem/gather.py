@@ -1,4 +1,3 @@
-import os
 from collections import defaultdict, deque
 from concurrent.futures.process import ProcessPoolExecutor
 from functools import partial
@@ -10,12 +9,13 @@ import pandas as pd
 
 def gather_files(root: Path, naming_convention: Callable[[str], Dict],
                  sub_folder_structure: Optional[Sequence[Pattern[AnyStr]]] = None,
-                 index: Optional[str] = None) -> pd.DataFrame:
+                 index: Optional[str] = None,
+                 ncores: Optional[int] = 1) -> pd.DataFrame:
     directories = list()
     _add_sub_folders(root, deque(sub_folder_structure or []), directories)
     files = _files_generator(directories)
     process_func = partial(_process_file, naming_convention=naming_convention)
-    with ProcessPoolExecutor(max_workers=os.cpu_count()) as executor:
+    with ProcessPoolExecutor(max_workers=ncores) as executor:
         files_and_metadata = executor.map(process_func, files)
 
     data = defaultdict(list)
