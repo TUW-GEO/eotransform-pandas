@@ -7,12 +7,12 @@
 | src/eotransform\_pandas/\_\_init\_\_.py                                 |        1 |        0 |        0 |        0 |    100% |           |
 | src/eotransform\_pandas/\_version.py                                    |        1 |        0 |        0 |        0 |    100% |           |
 | src/eotransform\_pandas/filesystem/\_\_init\_\_.py                      |        0 |        0 |        0 |        0 |    100% |           |
-| src/eotransform\_pandas/filesystem/gather.py                            |       45 |        1 |       22 |        2 |     96% |30, 36->35, 54->57 |
+| src/eotransform\_pandas/filesystem/gather.py                            |       44 |        1 |       22 |        2 |     95% |30, 36->35, 54->57 |
 | src/eotransform\_pandas/filesystem/naming/\_\_init\_\_.py               |        0 |        0 |        0 |        0 |    100% |           |
 | src/eotransform\_pandas/filesystem/naming/geopathfinder\_conventions.py |        8 |        5 |        0 |        0 |     38% |      7-11 |
 | src/eotransform\_pandas/transformers/\_\_init\_\_.py                    |        0 |        0 |        0 |        0 |    100% |           |
 | src/eotransform\_pandas/transformers/group\_by\_n.py                    |       21 |        0 |        2 |        0 |    100% |           |
-|                                                               **TOTAL** |   **76** |    **6** |   **24** |    **2** | **92%** |           |
+|                                                               **TOTAL** |   **75** |    **6** |   **24** |    **2** | **92%** |           |
 
 
 ## Setup coverage badge
