@@ -33,7 +33,7 @@ def _process_file(file, naming_convention):
 def _files_generator(directories: list) -> Generator[Path, None, None]:
     for directory in directories:
         for file in directory.iterdir():
-            if file.is_file():
+            if file.is_file() or (file.is_dir() and file.suffix == ".zarr"):
                 yield file
 
 
